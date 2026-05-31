@@ -1,4 +1,4 @@
-package security;
+package com.example.Slutprojekt.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -31,15 +31,21 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         if(authHeader != null && authHeader.startsWith("Bearer ")){
             String token = authHeader.substring(7);
 
-            String username = jwtService.validateTokenAndGetUsername(token);
+            try {
+                String username = jwtService.validateTokenAndGetUsername(token);
 
-            if(username != null){
-                UserDetails user = userDetailsService.loadUserByUsername(username);
+                if(username != null){
+                    UserDetails user = userDetailsService.loadUserByUsername(username);
 
-                //Figures out the type automatically with var
-                var authToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                    //Listar ut typen själv med var.
+                    var authToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
 
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
+            } catch (Exception e) {
+                // Ogiltig eller utgången token: ingen autentisering sätts.
+                // Anropet fortsätter utan inloggad användare och nekas (401/403)
+                // av Spring Security om endpointen är skyddad.
             }
         }
 

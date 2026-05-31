@@ -1,6 +1,6 @@
-package controller;
+package com.example.Slutprojekt.controller;
 
-import dto.LoginRequest;
+import com.example.Slutprojekt.dto.LoginRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import security.JwtService;
+import com.example.Slutprojekt.security.JwtService;
 
 import java.util.Map;
 
