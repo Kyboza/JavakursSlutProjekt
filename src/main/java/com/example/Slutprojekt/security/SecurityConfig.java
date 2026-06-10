@@ -35,6 +35,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/bookings/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/bookings").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/rooms").permitAll()
+                        //En redan inloggad user får bara en ny token funkar här men om frontend var med skulle man hantera det iallafall.
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .anyRequest().authenticated()
                 ).addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
